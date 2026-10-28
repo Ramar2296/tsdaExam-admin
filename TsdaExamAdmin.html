@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>TSDA ExamPro Admin</title>
+<style>
+:root{--navy:#0b3c9c;--navy2:#14307a;--or:#ff8a00;--bg:#eef2f9;--sf:#fff;--tx:#14213d;--mu:#5b6783;--bd:#d9e0ee;--ok:#1a8d4f;--er:#c62828;--wn:#b26a00;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1526;--sf:#17203a;--tx:#eef2fb;--mu:#a5b1cc;--bd:#2a3556;--or:#ffa63d;--ok:#4cc58a;--er:#ff7b7b;--wn:#ffb74d;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);padding-bottom:env(safe-area-inset-bottom,0)}
+[hidden]{display:none!important}
+header{background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;padding:calc(12px + env(safe-area-inset-top,0)) 16px 14px;display:flex;align-items:center;gap:10px}
+header b{font-size:17px;flex:1}header small{opacity:.8;display:block;font-weight:400;font-size:12px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{border:0;border-radius:12px;padding:10px 14px;min-height:44px;font-weight:700;cursor:pointer;background:var(--bd);color:var(--tx)}
+button.p{background:var(--or);color:#1a1200}button.d{background:var(--er);color:#fff}button.g{background:rgba(255,255,255,.18);color:#fff;min-height:36px;padding:6px 12px}
+button:disabled{opacity:.5}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--bd);border-radius:12px;background:var(--bg)}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+label{display:block;font-weight:600;font-size:13px;margin:12px 0 4px;color:var(--mu)}
+main{max-width:980px;margin:0 auto;padding:14px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+.login{max-width:420px;margin:28px auto}
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.tabs button{flex:1;white-space:nowrap}.tabs .on{background:var(--navy);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:12px}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px}.stat b{font-size:26px;display:block}.stat span{color:var(--mu);font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.chips button{min-height:34px;padding:4px 12px;font-size:13px}.chips .on{background:var(--navy);color:#fff}
+.u{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--sf);border:1px solid var(--bd);margin-bottom:8px;border-radius:14px;padding:12px}
+.u div{flex:1;min-width:0}.u b,.u small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.u small{color:var(--mu);font-weight:400}
+.b{font-size:12px;padding:3px 10px;border-radius:99px;font-weight:700;white-space:nowrap}
+.free{background:var(--bd)}.act{background:#d8f3e4;color:#0d5c32}.soon{background:#fff0cf;color:#8a5200}.exp{background:#fde0e0;color:#8f1d1d}.sus{background:#3b3b3b;color:#fff}
+.msg{min-height:1.4em;font-size:14px}.er{color:var(--er)}.ok{color:var(--ok);font-weight:600}.mu{color:var(--mu);font-size:13px}
+dialog{border:0;border-radius:18px;padding:16px;width:min(520px,94vw);background:var(--sf);color:var(--tx);max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(5,10,30,.55)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:8px 0}.kv span{color:var(--mu)}
+.log{font-size:13px;border-bottom:1px solid var(--bd);padding:8px 0}.log small{color:var(--mu)}
+</style>
+</head>
+<body>
+<header><div style="flex:1"><b>TSDA ExamPro Admin</b><small id="who">Toto Smart Digital Academy</small></div><button class="g" id="out" hidden>Toka</button></header>
+<main>
+<section class="card login" id="lg">
+<h2 style="margin:0 0 4px">Ingia kama admin</h2><p class="mu" style="margin:0">Ni wasimamizi walioidhinishwa tu.</p>
+<label for="e">Barua pepe</label><input id="e" type="email" autocomplete="username" inputmode="email">
+<label for="p">Nenosiri</label><input id="p" type="password" autocomplete="current-password">
+<p class="msg er" id="lm" role="alert"></p><button class="p" id="lb" style="width:100%">Ingia</button>
+</section>
+<section id="ap" hidden>
+<div class="tabs" id="tb"><button data-t="d" class="on">Dashibodi</button><button data-t="u">Watumiaji</button><button data-t="a">Kumbukumbu</button></div>
+<div id="vd"><div class="stats" id="st"></div><p class="mu" id="hint"></p></div>
+<div id="vu" hidden><input id="q" placeholder="Tafuta jina, barua pepe au shule" aria-label="Tafuta"><div class="chips" id="ch"></div><div id="ls"></div><button id="ex" style="width:100%;margin-top:6px">Pakua CSV</button></div>
+<div id="va" hidden><div class="card" id="al"></div></div>
+</section>
+</main>
+<dialog id="dg"></dialog>
+<script>
+const K="AIzaSyBgM4dkyGV8vImMCsIS5jruu6aO-QnV5FQ",FS="https://firestore.googleapis.com/v1/projects/tsda-exampro/databases/(default)/documents";
+const S={tok:"",rt:"",uid:"",em:"",U:[],E:{},A:[],f:"all",lk:0};
+const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const PL={free:"Free",basic:"Basic",standard:"Standard",premium:"Premium",school:"School Pack"},SL={free:"Free",act:"Hai",soon:"Inaisha",exp:"Imeisha",sus:"Imesitishwa"};
+const ER={EMAIL_NOT_FOUND:"Barua pepe au nenosiri si sahihi",INVALID_PASSWORD:"Barua pepe au nenosiri si sahihi",INVALID_LOGIN_CREDENTIALS:"Barua pepe au nenosiri si sahihi",TOO_MANY_ATTEMPTS_TRY_LATER:"Majaribio mengi. Subiri kidogo.",USER_DISABLED:"Akaunti imezuiwa",API_KEY_HTTP_REFERRER_BLOCKED:"Ufunguo wa Firebase umezuiwa kwa tovuti hii",NET:"Hakuna mtandao. Jaribu tena."};
+async function idt(m,b){let r;try{r=await fetch("https://identitytoolkit.googleapis.com/v1/accounts:"+m+"?key="+K,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)})}catch(x){throw{code:"NET"}}const j=await r.json().catch(()=>({}));if(!r.ok)throw{code:String((j.error&&j.error.message)||"").split(/[\s:]/)[0]};return j}
+async function refresh(){let r;try{r=await fetch("https://securetoken.googleapis.com/v1/token?key="+K,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"grant_type=refresh_token&refresh_token="+encodeURIComponent(S.rt)})}catch(x){throw{code:"NET"}}const j=await r.json();if(!r.ok)throw{code:"EXP"};S.tok=j.id_token;S.rt=j.refresh_token}
+async function fs(path,o,retry){o=o||{};if(retry==null)retry=1;let r;try{r=await fetch(FS+path,Object.assign({},o,{headers:{Authorization:"Bearer "+S.tok,"Content-Type":"application/json"}}))}catch(x){throw{code:"NET"}}
+if(r.status==401&&retry){await refresh();return fs(path,o,0)}const j=await r.json().catch(()=>({}));if(!r.ok)throw{code:r.status,msg:(j.error&&j.error.message)||""};return j}
+const val=f=>{if(!f)return"";const k=Object.keys(f)[0];return k=="integerValue"?+f[k]:k=="timestampValue"?new Date(f[k]):f[k]};
+const dc=d=>{const o={id:d.name.split("/").pop()};for(const k in d.fields||{})o[k]=val(d.fields[k]);return o};
+const enc=v=>v instanceof Date?{timestampValue:v.toISOString()}:typeof v=="boolean"?{booleanValue:v}:typeof v=="number"?{integerValue:String(v)}:{stringValue:String(v==null?"":v)};
+async function list(c,x){let out=[],t="";do{const j=await fs("/"+c+"?pageSize=300"+(x||"")+(t?"&pageToken="+encodeURIComponent(t):""));out=out.concat((j.documents||[]).map(dc));t=j.nextPageToken||""}while(t&&out.length<5000);return out}
+const fd=d=>d instanceof Date&&!isNaN(d)?d.toLocaleDateString("sw-TZ",{day:"2-digit",month:"short",year:"numeric"}):"—";
+const iso=d=>d instanceof Date&&!isNaN(d)?new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10):"";
+function status(u){const e=S.E[u.id];if(e&&e.suspended===true||e&&e.suspended==="true")return"sus";const p=e&&e.plan||"free";if(p=="free")return"free";const x=e.expires;if(!(x instanceof Date)||x<new Date())return"exp";return Math.ceil((x-new Date())/864e5)<=14?"soon":"act"}
+function idle(){S.lk=Date.now()}setInterval(()=>{if(S.tok&&Date.now()-S.lk>9e5)signOut("Umetolewa kwa usalama (hakuna shughuli dakika 15).")},3e4);["click","keydown","touchstart"].forEach(t=>addEventListener(t,idle,{passive:true}));
+function signOut(m){S.tok=S.rt=S.uid="";S.U=[];S.E={};S.A=[];$("ap").hidden=true;$("lg").hidden=false;$("out").hidden=true;$("who").textContent="Toto Smart Digital Academy";$("p").value="";$("lm").textContent=m||"";$("dg").open&&$("dg").close()}
+$("out").onclick=()=>signOut("");
+$("lb").onclick=async()=>{const m=$("lm");m.textContent="";const e=$("e").value.trim(),p=$("p").value;if(!e||!p){m.textContent="Weka barua pepe na nenosiri";return}
+$("lb").disabled=true;$("lb").textContent="Inaingia…";
+try{const j=await idt("signInWithPassword",{email:e,password:p,returnSecureToken:true});S.tok=j.idToken;S.rt=j.refreshToken;S.uid=j.localId;S.em=e;
+try{await fs("/entitlements?pageSize=1")}catch(x){if(x.code===403){signOut("Akaunti hii haina ruhusa ya admin. Barua pepe lazima iwe imethibitishwa na iwe ya admin.");return}throw x}
+$("lg").hidden=true;$("ap").hidden=false;$("out").hidden=false;$("who").textContent=e;idle();await load()}
+catch(x){signOut(ER[x.code]||"Imeshindwa. Jaribu tena.")}finally{$("lb").disabled=false;$("lb").textContent="Ingia"}};
+async function load(){try{const[u,e,a]=await Promise.all([list("users"),list("entitlements"),fs("/audit?pageSize=100&orderBy=at%20desc").then(j=>(j.documents||[]).map(dc))]);S.U=u.sort((x,y)=>String(x.name||x.email).localeCompare(String(y.name||y.email)));S.E={};e.forEach(x=>S.E[x.id]=x);S.A=a;draw()}catch(x){$("hint").textContent=x.code=="NET"?ER.NET:"Imeshindwa kupakia data ("+x.code+"). Angalia Security Rules na ruhusa ya admin."}}
+function draw(){const c={all:S.U.length,act:0,soon:0,exp:0,free:0,sus:0},n30=Date.now()-30*864e5;let nw=0;S.U.forEach(u=>{c[status(u)]++;if(u.createdAt instanceof Date&&u.createdAt>n30)nw++});
+$("st").innerHTML=[["Watumiaji wote",c.all],["Premium hai",c.act+c.soon],["Wanaisha ≤ siku 14",c.soon],["Wameisha",c.exp],["Free",c.free],["Wapya (siku 30)",nw]].map(x=>`<div class="stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join("");
+$("hint").textContent=S.U.length?"Takwimu zinatoka kwenye rekodi halisi pekee.":"Hakuna watumiaji bado. Rekodi huundwa programu inapoingia mtandaoni (toleo la programu linaloandika rekodi ya mtumiaji).";
+$("ch").innerHTML=[["all","Wote"],["act","Hai"],["soon","Wanaisha"],["exp","Wameisha"],["free","Free"],["sus","Waliositishwa"]].map(x=>`<button data-f="${x[0]}" class="${S.f==x[0]?"on":""}">${x[1]} (${c[x[0]]||0})</button>`).join("");
+const q=$("q").value.trim().toLowerCase(),L=S.U.filter(u=>(S.f=="all"||status(u)==S.f)&&(!q||[u.name,u.email,u.school].join(" ").toLowerCase().includes(q)));
+$("ls").innerHTML=L.length?L.map(u=>{const s=status(u),e=S.E[u.id]||{};return`<button class="u" data-id="${esc(u.id)}"><div><b>${esc(u.name||u.email||"(bila jina)")}</b><small>${esc(u.email)} · ${esc(u.school||"shule haijaandikwa")}</small></div><span class="b ${s}">${SL[s]}${e.plan&&e.plan!="free"?" · "+PL[e.plan]:""}</span></button>`}).join(""):`<p class="mu">Hakuna matokeo.</p>`;
+$("al").innerHTML=S.A.length?S.A.map(a=>`<div class="log"><b>${esc(a.act)}</b><br><small>${esc(a.email||a.uid)} · na ${esc(a.by)} · ${fd(a.at)} ${a.at instanceof Date?a.at.toLocaleTimeString("sw-TZ",{hour:"2-digit",minute:"2-digit"}):""}</small></div>`).join(""):`<p class="mu">Hakuna kumbukumbu bado.</p>`}
+$("tb").onclick=e=>{const t=e.target.dataset.t;if(!t)return;[...$("tb").children].forEach(b=>b.classList.toggle("on",b==e.target));$("vd").hidden=t!="d";$("vu").hidden=t!="u";$("va").hidden=t!="a"};
+$("ch").onclick=e=>{if(e.target.dataset.f){S.f=e.target.dataset.f;draw()}};$("q").oninput=draw;
+$("ls").onclick=e=>{const b=e.target.closest("[data-id]");if(b)open(b.dataset.id)};
+function open(id){const u=S.U.find(x=>x.id==id),e=S.E[id]||{},d=$("dg");
+d.innerHTML=`<h2 style="margin:0 0 4px">${esc(u.name||u.email)}</h2><div class="kv"><span>Barua pepe</span><b>${esc(u.email)}</b><span>Shule</span><b>${esc(u.school||"—")}</b><span>Jukumu</span><b>${esc(u.role||"—")}</b><span>Alijisajili</span><b>${fd(u.createdAt)}</b><span>Mwisho kuonekana</span><b>${fd(u.lastSeen)}</b><span>Toleo la programu</span><b>${esc(u.appVersion||"—")}</b></div>
+<label for="pl">Kifurushi</label><select id="pl">${Object.keys(PL).map(k=>`<option value="${k}" ${k==(e.plan||"free")?"selected":""}>${PL[k]}</option>`).join("")}</select>
+<label for="xd">Inaisha tarehe</label><input id="xd" type="date" value="${iso(e.expires)}">
+<div class="row" style="margin-top:6px"><button data-add="30">+30</button><button data-add="90">+90</button><button data-add="365">+365</button></div>
+<label style="display:flex;gap:8px;align-items:center;margin-top:14px"><input id="su" type="checkbox" style="width:20px;height:20px" ${e.suspended===true||e.suspended==="true"?"checked":""}>Sitisha haki za mtumiaji huyu</label>
+<label for="nt">Maelezo ya ndani (mtumiaji haoni)</label><textarea id="nt" rows="2">${esc(e.note||"")}</textarea>
+<p class="msg" id="dm" role="alert"></p><div class="row"><button id="dc">Funga</button><button class="p" id="ds">Hifadhi</button></div>
+<hr style="border:0;border-top:1px solid var(--bd);margin:16px 0"><button class="d" id="dd" style="width:100%">Futa rekodi ya mtumiaji</button><p class="mu">Inafuta rekodi na haki zake hapa tu. Akaunti ya kuingia ya Firebase inabaki hadi mtumiaji ajifute mwenyewe kwenye programu au kwenye ukurasa wa kufuta akaunti.</p>`;
+d.showModal();$("dc").onclick=()=>d.close();
+d.onclick=ev=>{const a=ev.target.dataset&&ev.target.dataset.add;if(a){const cur=$("xd").value?new Date($("xd").value+"T12:00:00"):new Date(),b=cur>new Date()?cur:new Date();b.setDate(b.getDate()+ +a);$("xd").value=iso(b);if($("pl").value=="free")$("pl").value="premium"}};
+$("ds").onclick=()=>save(u,e);$("dd").onclick=()=>remove(u)}
+async function log(u,act){try{await fs("/audit",{method:"POST",body:JSON.stringify({fields:{at:enc(new Date()),by:enc(S.em),uid:enc(u.id),email:enc(u.email||""),act:enc(act)}})})}catch(x){}}
+async function save(u,e){const m=$("dm"),pl=$("pl").value,xd=$("xd").value,su=$("su").checked;m.className="msg er";
+if(pl!="free"&&!xd){m.textContent="Weka tarehe ya kuisha kwa kifurushi chenye malipo.";return}
+const f={plan:enc(pl),suspended:enc(su),note:enc($("nt").value.trim()),updatedBy:enc(S.em),updatedAt:enc(new Date())};if(xd)f.expires=enc(new Date(xd+"T23:59:59"));
+$("ds").disabled=true;
+try{await fs("/entitlements/"+u.id+"?"+Object.keys(f).map(k=>"updateMask.fieldPaths="+k).join("&"),{method:"PATCH",body:JSON.stringify({fields:f})});
+await log(u,"Haki: "+PL[pl]+(xd?" hadi "+xd:"")+(su?" · imesitishwa":""));m.className="msg ok";m.textContent="Imehifadhiwa";await load();setTimeout(()=>$("dg").open&&$("dg").close(),600)}
+catch(x){m.textContent=x.code=="NET"?ER.NET:"Imeshindwa ("+x.code+"). Angalia ruhusa.";$("ds").disabled=false}}
+async function remove(u){if(!confirm("Futa rekodi ya "+(u.email||u.id)+"? Hili haliwezi kurudishwa."))return;const m=$("dm");
+try{await fs("/users/"+u.id,{method:"DELETE"});try{await fs("/entitlements/"+u.id,{method:"DELETE"})}catch(x){}await log(u,"Rekodi imefutwa");$("dg").close();await load()}catch(x){m.className="msg er";m.textContent="Imeshindwa ("+x.code+")."}}
+$("ex").onclick=()=>{const q=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"',rows=[["Jina","Barua pepe","Shule","Jukumu","Kifurushi","Inaisha","Hali","Alijisajili"]].concat(S.U.map(u=>{const e=S.E[u.id]||{};return[u.name,u.email,u.school,u.role,PL[e.plan||"free"],iso(e.expires),SL[status(u)],iso(u.createdAt)]}));
+const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.map(r=>r.map(q).join(",")).join("\n")],{type:"text/csv"}));a.download="tsda-exampro-watumiaji-"+iso(new Date())+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5e3)};
+</script>
+</body>
+</html>
